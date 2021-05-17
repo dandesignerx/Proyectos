@@ -1,0 +1,30 @@
+<?php
+
+$Ruta_Destino = "factura.xml"; //ruta del documento factura electronica xml
+
+function SearchText($valor,$xml,$campo){
+$pos_tipo = stripos($xml, $campo);
+$pos_tipo = $pos_tipo + $valor;
+$tipo_rev = substr($xml,$pos_tipo,-1); 
+$pos_final_tipo = stripos($tipo_rev, "~");
+$resultado = substr($tipo_rev,0,$pos_final_tipo); 
+return $resultado;
+}
+
+$xmlDoc = new DOMDocument();
+$xmlDoc->load($Ruta_Destino);
+echo $xml=$xmlDoc->getElementsByTagName("DscItem")->item(0)->nodeValue;
+$MontoTotak=$xmlDoc->getElementsByTagName("MntTotal")->item(0)->nodeValue;
+
+echo "<hr />";
+
+// lectura datos del vehiculo de factura electronica
+echo "<br />".$tipo_vehiculo = SearchText(15,$xml,"TIPO VEHICULO :");
+echo "<br />".$marca  = SearchText(7,$xml,"MARCA :");
+echo "<br />".$modelo = SearchText(8,$xml,"MODELO :");
+echo "<br />".$color  = SearchText(8,$xml,"COLOR :");
+echo "<br />".$chasis = SearchText(7,$xml,"chasis ");
+echo "<br />".$motor  = SearchText(7,$xml,"Motor ");
+echo "<br />".$anio   = SearchText(4,$xml,"Año ");
+
+?>
